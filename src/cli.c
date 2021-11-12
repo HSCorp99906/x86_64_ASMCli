@@ -1,6 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
+#include "../include/Lexer.h"
+#include "../include/Token.h"
+
+
+#define MAX_SIZE 256
+
+char* commandBuf;
+tokenlist_t toklist;
+
+
+void signal_callback_handler(int sigint) {
+    printf("\n\nBye!\n\n");
+    free(commandBuf);
+    free(toklist.tokens);
+    exit(0);
+}
 
 
 int main() {
@@ -8,10 +25,14 @@ int main() {
     system("../bin/welcome");
     printf("\n\n");
 
-    char commandBuf[256];
+    commandBuf = (char*)malloc(sizeof(char) * MAX_SIZE);
+    tokenlist_init(&toklist);
 
-    while (strcmp(commandBuf, "quit") != 0) {
+    signal(SIGINT, signal_callback_handler);
+
+    while (1) {
          printf("ASM_CLI:~$ ");
-         scanf("%s", commandBuf);
+         fgets(commandBuf, MAX_SIZE, stdin);
+         tokenize(&toklist);
     }
 }
