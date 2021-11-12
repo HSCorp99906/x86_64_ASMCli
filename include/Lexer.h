@@ -9,7 +9,6 @@ extern char* commandBuf;
 typedef struct Lexer {
     char* currentLine;
     unsigned int pos;
-    token_t curTok;
 } lexer_t;
 
 

@@ -80,6 +80,6 @@ void tokenize(tokenlist_t* tokenlist) {
     char* match;
 
     if (match = strstr(matchBuf, "0x")) {
-        add_to_tokenlist(tokenlist, create(T_HEX, '\0', match));
+        add_to_tokenlist(tokenlist, create_token(T_HEX, '\0', match));
     }
 }
